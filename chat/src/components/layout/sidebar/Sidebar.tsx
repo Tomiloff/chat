@@ -1,10 +1,20 @@
+'use client';
+
+import cn from 'clsx';
 import React from 'react';
 import Image from "next/image";
-import {MessagesSquare, Phone, Settings, Sun, Users2} from "lucide-react";
+import {Sun} from "lucide-react";
 import styles from './Sidebar.module.scss'
 import Link from "next/link";
+// import {headers} from "next/headers";
+import {MENU} from "@/components/layout/sidebar/sidebar.data";
 
 const Sidebar = () => {
+    // const headerList = headers();
+    // const headerUrl = headerList.get('referer');
+    //
+    // console.log(headerUrl?.split('/').slice(3).join('/'))
+
     return (
         <aside className={styles.sidebar}>
             <Image
@@ -16,20 +26,21 @@ const Sidebar = () => {
             />
 
             <div>
-                <Link href="/friends">
-                    <Users2 size={35} />
-                </Link>
-                <Link href="/call">
-                    <Phone size={35} />
-                </Link>
-                <Link href="/chats">
-                    <MessagesSquare size={35} />
-                </Link>
-                <Link href="/setting">
-                    <Settings size={35} />
-                </Link>
+                {MENU.map(item => {
+                    return (
+                        <Link
+                            href={item.url}
+                            key={item.url}
+                            className={cn({
+                                [styles.active]: false,
+                            })}
+                        >
+                            <item.icon size={27} />
+                        </Link>
+                    )
+                })
+                }
             </div>
-
 
             <Sun/>
         </aside>
